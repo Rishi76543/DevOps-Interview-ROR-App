@@ -5,17 +5,17 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - $(aws ecr get-login --no-include-email --region ap-south-1)
   build:
     commands:
       - echo Build started on `date`
-      - docker build -t $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - docker tag $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION $REPOSITORY_URI:latest
+      - echo Building the Docker image...
+      - docker build -t ror-app:latest .
+      - docker tag ror-app:latest 229791758070.dkr.ecr.ap-south-1.amazonaws.com/ror-app:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - docker push $REPOSITORY_URI:latest
+      - docker push 229791758070.dkr.ecr.ap-south-1.amazonaws.com/ror-app:latest
 artifacts:
   files: imagedefinitions.json
