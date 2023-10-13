@@ -10,7 +10,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t ror-app:latest .
+      - docker build -t ror-app .
       - docker tag ror-app:latest 229791758070.dkr.ecr.ap-south-1.amazonaws.com/ror-app:latest
   post_build:
     commands:
