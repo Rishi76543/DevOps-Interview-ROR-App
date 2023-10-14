@@ -1,19 +1,1 @@
-version: '3'
-services:
-  app:
-    build:
-      context: ./docker/app
-    volumes:
-      - ./app:/app  # Mount your Rails application code into the container
-    environment:
-      - RAILS_ENV=development  # Set the environment variable as needed
-    ports:
-      - "3000:3000"  # Map container port to the host
 
-  nginx:
-    build:
-      context: ./docker/nginx
-    ports:
-      - "80:80"  # Map container port to the host
-    depends_on:
-      - app  # Ensure that the Nginx container starts after the Rails app container
