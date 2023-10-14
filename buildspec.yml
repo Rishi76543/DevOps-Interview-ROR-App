@@ -12,11 +12,11 @@ phases:
   build:
     commands:
       - echo Building the Docker containers using docker-compose...
-      - docker-compose -f /docker-compose.yml build
-      - docker-compose -f /docker-compose.yml up -d
+      - docker-compose -f docker-compose.yml build
+      - docker-compose -f docker-compose.yml up -d
 
 post_build:
   commands:
     - echo Pushing Docker images to ECR...
-    - docker-compose -f /docker-compose.yml push
+    - docker-compose -f docker-compose.yml push
     - echo Application deployment complete.
