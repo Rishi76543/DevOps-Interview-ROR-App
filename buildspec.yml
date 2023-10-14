@@ -1,7 +1,9 @@
 version: 0.2
 
-
 phases:
+  install:
+    runtime-versions:
+      docker: 18
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -9,9 +11,7 @@ phases:
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - REPOSITORY_URI=229791758070.dkr.ecr.ap-south-1.amazonaws.com/ror-app
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}
-      - sudo systemctl start docker
-      - sudo systemctl status docker
+      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
       - echo Build started on `date`
