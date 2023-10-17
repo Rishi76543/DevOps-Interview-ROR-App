@@ -19,6 +19,7 @@ This assignment aims to demonstrate the process of deploying a Dockerized Ruby o
 
 ### Iac Structure
 ...
+
 AWSTemplateFormatVersion: '2010-09-09'
 Description: AWS CloudFormation Template for complete application setup
 
@@ -188,15 +189,45 @@ Outputs:
 ### Docker Folder Structure
 
     ...
-    ├── docker
-    │   ├── app
-    │   │   ├── Dockerfile         # Rails container dockerfile
-    │   │   └── entrypoint.sh      # Rails container entrypoint
-    │   └── nginx
-    │       ├── default.conf       # Nginx config file
-    │       └── Dockerfile         # Nginx container dockerfile
-    │                   
-    ├── docker-compose.yml         # docker-compose file
+version: "3.4"
+
+services:
+  rails_app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    image: rails_app
+    container_name: rails_app
+    ports:
+      - "3000:3000"
+    networks:
+      - app_network
+    env_file: rails_app.env
+
+  webserver:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    image: webserver
+    container_name: webserver
+    ports:
+      - "8080:8080"
+    networks:
+      - app_network
+
+  postgres:
+    image: postgres:13.3
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
     ...
 
 ### Environment variable for Ruby container
