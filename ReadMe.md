@@ -18,7 +18,7 @@ This assignment aims to demonstrate the process of deploying a Dockerized Ruby o
 
 
 ### Iac Structure
-
+...
 AWSTemplateFormatVersion: '2010-09-09'
 Description: AWS CloudFormation Template for complete application setup
 
@@ -160,7 +160,7 @@ Outputs:
   LoadBalancerDNSName:
     Description: 'DNS name of the Load Balancer'
     Value: !GetAtt LoadBalancer.DNSName
-
+...
 
 
 ### Prerequisites
